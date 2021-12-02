@@ -25,8 +25,8 @@ public class FraganceService {
         if (fragance.getReference() == null) {
             return fraganceRepository.save(fragance);
         } else {
-            Optional<Fragance> consulta = fraganceRepository.getFragance(fragance.getReference());
-            if (consulta.isEmpty()) {
+            Optional<Fragance> fraganceSave = fraganceRepository.getFragance(fragance.getReference());
+            if (fraganceSave.isEmpty()) {
                 return fraganceRepository.save(fragance);
             } else {
                 return fragance;
@@ -34,44 +34,53 @@ public class FraganceService {
         }
     }
 
-    public boolean delete(String reference) {
-        Optional<Fragance> consulta = fraganceRepository.getFragance(reference);
-        if (!consulta.isEmpty()) {
-            fraganceRepository.delete(consulta.get());
-            return true;
-        }
-        return false;
-    }
 
     public Fragance update(Fragance fragance) {
         if (fragance.getReference() != null) {
-            Optional<Fragance> consulta = fraganceRepository.getFragance(fragance.getReference());
-            if (!consulta.isEmpty()) {
+            Optional<Fragance> fraganceUpdate = fraganceRepository.getFragance(fragance.getReference());
+            if (!fraganceUpdate.isEmpty()) {
                 if (fragance.getBrand() != null) {
-                    consulta.get().setBrand(fragance.getBrand());
+                    fraganceUpdate.get().setBrand(fragance.getBrand());
                 }
                 if (fragance.getCategory() != null) {
-                    consulta.get().setCategory(fragance.getCategory());
+                    fraganceUpdate.get().setCategory(fragance.getCategory());
                 }
                 if (fragance.getPresentation() != null) {
-                    consulta.get().setPresentation(fragance.getPresentation());
+                    fraganceUpdate.get().setPresentation(fragance.getPresentation());
                 }
                 if (fragance.getDescription() != null) {
-                    consulta.get().setDescription(fragance.getDescription());
+                    fraganceUpdate.get().setDescription(fragance.getDescription());
                 }
                 if (fragance.getAvailability() != null) {
-                    consulta.get().setAvailability(fragance.getAvailability());
+                    fraganceUpdate.get().setAvailability(fragance.getAvailability());
                 }
                 if (fragance.getPrice() != null) {
-                    consulta.get().setPrice(fragance.getPrice());
+                    fraganceUpdate.get().setPrice(fragance.getPrice());
                 }
                 if (fragance.getQuantity() != null) {
-                    consulta.get().setQuantity(fragance.getQuantity());
+                    fraganceUpdate.get().setQuantity(fragance.getQuantity());
                 }
-                return fraganceRepository.save(consulta.get());
+                if (fragance.getPhotography() != null) {
+                    fraganceUpdate.get().setPhotography(fragance.getPhotography());
+                }
+                fraganceRepository.update(fraganceUpdate.get());
+                return fraganceUpdate.get();
+            } else {
+                return fragance;
             }
+        } else {
+            return fragance;
         }
-        return fragance;
+    }
+    
+    
+    public boolean delete(String reference) {
+        Optional<Fragance> fraganceDelete = fraganceRepository.getFragance(reference);
+        if (!fraganceDelete.isEmpty()) {
+            fraganceRepository.delete(fraganceDelete.get());
+            return true;
+        }
+        return false;
     }
 
 }

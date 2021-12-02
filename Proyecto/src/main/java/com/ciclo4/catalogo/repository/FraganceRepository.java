@@ -24,6 +24,10 @@ public class FraganceRepository {
     public Fragance save(Fragance fragance) {
         return fraganceCrudRepository.save(fragance);
     }
+    
+    public Fragance update(Fragance fragance) {
+        return fraganceCrudRepository.save(fragance);
+    }
 
     public void delete(Fragance fragance) {
         fraganceCrudRepository.delete(fragance);

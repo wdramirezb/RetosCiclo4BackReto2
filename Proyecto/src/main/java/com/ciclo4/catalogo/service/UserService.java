@@ -25,8 +25,8 @@ public class UserService {
         if (user.getId() == null) {
             return user;
         } else {
-            Optional<User> validate = userRepository.getUser(user.getId());
-            if (validate.isEmpty()) {
+            Optional<User> userSave = userRepository.getUser(user.getId());
+            if (userSave.isEmpty()) {
                 if (emailExists(user.getEmail()) == false) {
                     return userRepository.save(user);
                 } else {
